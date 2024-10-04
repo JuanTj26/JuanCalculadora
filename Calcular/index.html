@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Corriente</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin: 10px 0 5px;
+            display: block;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 1em;
+            width: 300px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        select {
+            padding: 12px;
+            font-size: 1em;
+            width: 320px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        button {
+            padding: 12px 15px;
+            font-size: 1.1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+
+        #resultado {
+            font-weight: bold;
+            font-size: 1.4em;
+            margin-top: 20px;
+            color: #28a745;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Corriente</h1>
+        
+        <label for="resistencia">Valor de la Resistencia:</label>
+        <input type="number" id="resistencia" required placeholder="Ingresa la resistencia">
+
+        <label for="unidad">Unidad de Resistencia:</label>
+        <select id="unidad">
+            <option value="ohmios">Ohms (Ω)</option>
+            <option value="kiloohmios">Kilohms (kΩ)</option>
+        </select>
+
+        <button onclick="calcularCorriente()">Calcular Corriente</button>
+        
+        <h2 id="resultado"></h2>
+    </div>
+
+    <script>
+        function calcularCorriente() {
+            const resistencia = parseFloat(document.getElementById('resistencia').value);
+            const unidad = document.getElementById('unidad').value;
+            let resistenciaEnOhms = resistencia;
+
+            // Convertir kilohmios a ohms si es necesario
+            if (unidad === "kiloohmios") {
+                resistenciaEnOhms *= 1000;
+            }
+
+            const voltaje = 5;  // Valor fijo del voltaje (en volts)
+            
+            if (resistenciaEnOhms > 0) {
+                const corriente = voltaje / resistenciaEnOhms; // Aplicar ley de Ohm (I = V / R)
+                document.getElementById('resultado').innerText = `Corriente: ${(corriente * 1000).toFixed(2)} mA`; // Convertir a mA
+            } else {
+                document.getElementById('resultado').innerText = 'Ingresa un valor de resistencia válido.';
+            }
+        }
+    </script>
+</body>
+</html>
